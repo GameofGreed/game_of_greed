@@ -1,5 +1,5 @@
-from game_of_greed.game_logic import GameLogic
-from game_of_greed.banker import Banker
+from game_logic import GameLogic, Banker
+
 
 class Game:
     """Class for game of Greed Application
@@ -41,6 +41,6 @@ class Game:
     def start_game(self):
         pass
 
-    if __name__ == "__main__":
-        game = Game()
-        game.play
+    game = Game()
+    game.play()
+    
