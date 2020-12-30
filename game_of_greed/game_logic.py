@@ -20,12 +20,15 @@ class GameLogic:
             roll_result += (random.randint(1, 6),)
         return roll_result
 
-
 class Banker:
-    pass
+    shelved = 0
+    balance = 0
+    
+    def shelf(self,calc_score):
+        self.shelved += calc_score
+        
 
 
-    # def shelf
 
 
 
