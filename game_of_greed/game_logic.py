@@ -36,6 +36,29 @@ class GameLogic:
         return roll_result
 
 class Banker:
+<<<<<<< HEAD
+    
+    def __init__(self, round_points= 0) -> int:
+        self.round_points = round_points
+
+
+    # def shelf
+
+
+
+
+
+    def bank(self, shelf_to_bank: int) -> int:
+        self.round_points += shelf_to_bank
+
+        if self.round_points >= 10000:
+            print(f'Winner {self.round_points}')
+            self.round_points = 0
+        
+
+
+
+=======
     shelved = 0
     balance = 0
     
@@ -46,6 +69,7 @@ class Banker:
 
 
     #def bank
+>>>>>>> 80cf7d6dfcde34611ce38222bf3e5b7b8ae1d11e
 
 
 
