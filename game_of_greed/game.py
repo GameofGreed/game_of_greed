@@ -10,7 +10,7 @@ class Game:
         self.num_rounds = num_rounds
     
     def play(self, roller=None):
-        """This will start of decline game
+        """This will start or decline game
 
         Args:
             roller (function, optional): 
@@ -40,6 +40,8 @@ class Game:
     
     def start_game(self):
         pass
+        #if calc_score is = 0  and  shelved is a truthy value
+            #self.clear_shelf()
 
     game = Game()
     game.play()
