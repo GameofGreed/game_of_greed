@@ -32,19 +32,14 @@ class GameLogic:
                 elif(count > 2):
                     score += (die * 100) * (count -2 )
             
-        print(roll.items())
         return score 
     
 
 
     @staticmethod
     def roll_dice(die_num = 6) -> tuple:
-        # create tuple with random int 1-6
-        # The length of tuple must match the argument given 
-        
         roll_result = tuple(())
-        # loop through rolling single die for die_num number of times
-        # add to tuple and return 
+
         for die in range(1,die_num+1):
             roll_result = roll_result + (random.randint(1,6),)
         return roll_result   
@@ -55,9 +50,6 @@ class Banker:
         self.balance = balance
         self.shelved = shelved
 
-    # shelved = 0
-    # balance = 0
-    
     def shelf(self,calc_score) -> int:
         self.shelved += calc_score
         
@@ -69,17 +61,12 @@ class Banker:
 
         if self.balance >= 10000:
             print(f'Winner {self.balance}')
-            self.balance = 0 #maybe redundant
+            self.balance = 0
         
 
     def clear_shelf(self):
         self.shelved = 0 
 
 
-# should remove any unbanked points, resetting to zero.
-# should not affect previously banked points
-
-
 if __name__ == "__main__":
     dice = GameLogic.roll_dice()
-    print(GameLogic.calculate_score((1,1,2,2,3,3)))
