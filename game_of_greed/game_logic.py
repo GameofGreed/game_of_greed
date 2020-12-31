@@ -22,6 +22,7 @@ class GameLogic:
 
 
 class Banker:
+    
     def __init__(self, round_points= 0) -> int:
         self.round_points = round_points
 
