@@ -22,7 +22,8 @@ class GameLogic:
 
 
 class Banker:
-    pass
+    def __init__(self, round_points= 0) -> int:
+        self.round_points = round_points
 
 
     # def shelf
@@ -31,7 +32,16 @@ class Banker:
 
 
 
-    # def bank
+    def bank(self, shelf_to_bank: int) -> int:
+        self.round_points += shelf_to_bank
+
+        if self.round_points >= 10000:
+            print(f'Winner {self.round_points}')
+            self.round_points = 0
+        
+
+
+
 
 
 
