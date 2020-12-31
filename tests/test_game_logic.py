@@ -46,21 +46,23 @@ def test_roll_dice_range():
 
 def test_bank_instance():
     round_bank = Banker()
-    assert round_bank.round_points == 0
+    assert round_bank.balance == 0
 
 
 # @pytest.mark.skip('pending code')
 def test_bank_instance_add_from_shelf():
     round_bank = Banker(0)
-    round_bank.bank(300)
-    round_bank.bank(750)
-    assert round_bank.round_points == 1050
+    round_bank.shelf(300)
+    round_bank.shelf(750)
+    round_bank.bank()
+    assert round_bank.balance == 1050
 
 # @pytest.mark.skip('pending code')
 def test_bank_over_ten_thousand():
     round_bank = Banker (9000)
-    round_bank.bank(2000)
-    assert round_bank.round_points == 0
+    round_bank.shelf(2000)
+    round_bank.bank()
+    assert round_bank.balance == 0
     
 def test_new_banker():
     banker = Banker()
@@ -200,4 +202,22 @@ def test_six_ones():
 def test_all(test_input, expected):
     actual = GameLogic.calculate_score(test_input)
     assert actual == expected
+
+def test_deposit():
+    banker = Banker()
+    banker.shelf(100)
+    banker.bank()
+    assert banker.shelved == 0
+    assert banker.balance == 100
+
+
+def test_clear_shelf():
+    banker = Banker()
+    banker.shelf(100)
+    banker.bank()
+    banker.shelf(50)
+    banker.clear_shelf()
+    assert banker.balance == 100
+    assert banker.shelved == 0
+
 

@@ -8,8 +8,18 @@ class GameLogic:
         roll = collections.Counter(rolled_tuple)
         score = 0
 
+        if len(roll.items()) == 3:
+            pairs = 0
+            for item in roll.items():
+                if item[1] == 2:
+                    pairs += 1
+            if pairs == 3:
+                score += 1500 
+                return score       
+
         if len(roll.items()) == 6:
             score += 1500
+
         else:
             for die, count in roll.items():
                 if die == 1:
@@ -22,8 +32,8 @@ class GameLogic:
                 elif(count > 2):
                     score += (die * 100) * (count -2 )
             
-
-        return score
+        print(roll.items())
+        return score 
     
 
 
@@ -40,48 +50,36 @@ class GameLogic:
         return roll_result   
 
 class Banker:
-<<<<<<< HEAD
     
-    def __init__(self, round_points= 0) -> int:
-        self.round_points = round_points
+    def __init__(self, balance= 0, shelved= 0) -> int:
+        self.balance = balance
+        self.shelved = shelved
 
-
-    # def shelf
-
-
-
-
-
-    def bank(self, shelf_to_bank: int) -> int:
-        self.round_points += shelf_to_bank
-
-        if self.round_points >= 10000:
-            print(f'Winner {self.round_points}')
-            self.round_points = 0
-        
-
-
-
-=======
-    shelved = 0
-    balance = 0
+    # shelved = 0
+    # balance = 0
     
     def shelf(self,calc_score) -> int:
         self.shelved += calc_score
         
 
 
+    def bank(self) -> int:
+        self.balance += self.shelved
+        self.clear_shelf()
 
-    #def bank
->>>>>>> 80cf7d6dfcde34611ce38222bf3e5b7b8ae1d11e
+        if self.balance >= 10000:
+            print(f'Winner {self.balance}')
+            self.balance = 0 #maybe redundant
+        
+
+    def clear_shelf(self):
+        self.shelved = 0 
 
 
-
-
-
-    #def clear_shelf
+# should remove any unbanked points, resetting to zero.
+# should not affect previously banked points
 
 
 if __name__ == "__main__":
     dice = GameLogic.roll_dice()
-    print(GameLogic.calculate_score((1,2,3,4,5,6)))
+    print(GameLogic.calculate_score((1,1,2,2,3,3)))
