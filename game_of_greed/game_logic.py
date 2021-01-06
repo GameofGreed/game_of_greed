@@ -22,6 +22,8 @@ class GameLogic:
 
         else:
             for die, count in roll.items():
+                print('die', die) 
+                print('count', count) 
                 if die == 1:
                     if count > 2:
                         score += (die * 1000) * ( count - 2)
@@ -32,7 +34,8 @@ class GameLogic:
                 elif(count > 2):
                     score += (die * 100) * (count -2 )
             
-        print(roll.items())
+        # print(roll.items())
+        print('score', score)
         return score 
     
 
@@ -47,7 +50,38 @@ class GameLogic:
         # add to tuple and return 
         for die in range(1,die_num+1):
             roll_result = roll_result + (random.randint(1,6),)
+
+        print(f'{roll_result}')
         return roll_result   
+
+    @staticmethod
+    def start_round():
+        user_choice = input('press (r) to roll dice or (q) to quit')
+        
+        if user_choice == 'r':
+            GameLogic.roll_dice()
+            
+            dice_shelf = input('enter dice to score')
+            
+            dice_shelf = list(dice_shelf)
+
+            for item in range(len(dice_shelf)):
+                dice_shelf[item] = int(dice_shelf[item])
+                
+            dice_shelf = tuple(dice_shelf)
+
+            print('gamelogic score @fn: start_round', GameLogic.calculate_score(dice_shelf))
+
+            user_choice = input('press (r) to roll again or (b) to bank points')
+        
+            if user_choice == 'r':
+                GameLogic.roll_dice(6-len(dice_shelf))
+                
+                
+
+        
+
+
 
 class Banker:
     
@@ -81,5 +115,7 @@ class Banker:
 
 
 if __name__ == "__main__":
-    dice = GameLogic.roll_dice()
-    print(GameLogic.calculate_score((1,1,2,2,3,3)))
+    # dice = GameLogic.roll_dice()
+    # print(GameLogic.calculate_score((1,1,2,2,3,3)))
+
+    GameLogic.start_round()
