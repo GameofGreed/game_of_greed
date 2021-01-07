@@ -22,8 +22,6 @@ class GameLogic:
 
         else:
             for die, count in roll.items():
-                print('die', die) 
-                print('count', count) 
                 if die == 1:
                     if count > 2:
                         score += (die * 1000) * ( count - 2)
@@ -32,10 +30,7 @@ class GameLogic:
                 elif die == 5 and count < 3:
                     score += die * 10 * count
                 elif(count > 2):
-                    score += (die * 100) * (count -2 )
-            
-        # print(roll.items())
-        print('score', score)
+                    score += (die * 100) * (count -2 )       
         return score 
     
 
@@ -53,34 +48,6 @@ class GameLogic:
 
         print(f'{roll_result}')
         return roll_result   
-
-    @staticmethod
-    def start_round():
-        user_choice = input('press (r) to roll dice or (q) to quit')
-        
-        if user_choice == 'r':
-            GameLogic.roll_dice()
-            
-            dice_shelf = input('enter dice to score')
-            
-            dice_shelf = list(dice_shelf)
-
-            for item in range(len(dice_shelf)):
-                dice_shelf[item] = int(dice_shelf[item])
-                
-            dice_shelf = tuple(dice_shelf)
-
-            print('gamelogic score @fn: start_round', GameLogic.calculate_score(dice_shelf))
-
-            user_choice = input('press (r) to roll again or (b) to bank points')
-        
-            if user_choice == 'r':
-                GameLogic.roll_dice(6-len(dice_shelf))
-                
-                
-
-        
-
 
 
 class Banker:
@@ -110,8 +77,66 @@ class Banker:
         self.shelved = 0 
 
 
-# should remove any unbanked points, resetting to zero.
-# should not affect previously banked points
+class Player(Banker):
+
+    def __init__(self, round = 0, scored_dice = tuple()):
+        self.round = round
+        self.scored_dice = scored_dice
+        self.wallet = Banker()
+
+    def start_round(self):
+        print(f'Starting round {self.round}')
+        user_choice = input('press (r) to roll dice or (q) to quit')
+        
+        if user_choice == 'r':
+            admit = GameLogic.roll_dice()
+            
+            if GameLogic.calculate_score(admit):
+                dice_shelf = input('enter dice to score')
+                self.scored_dice = str_tuple_int(dice_shelf)
+                self.wallet.shelf(GameLogic.calculate_score(self.scored_dice))
+                self.bank_or_roll()
+
+            else:
+                print("Sorry you Farkled on your first roll!")
+                self.start_round += 1
+                self.start_round()   
+
+        elif user_choice == 'q':
+            print(f'Thanks for playing. You earned {self.wallet.balance} points.')
+
+    def bank_or_roll(self):
+            user_choice = input('press (r) to roll again or (b) to bank points or (q) to quit.')
+        
+            if user_choice == 'r':
+                sec_roll = GameLogic.roll_dice(6-len(self.scored_dice))
+
+                if GameLogic.calculate_score(sec_roll):
+                    dice_shelf = input('enter dice to score')
+                    self.scored_dice = str_tuple_int(dice_shelf)
+                    self.wallet.shelf(GameLogic.calculate_score(self.scored_dice))
+                    self.bank_or_roll()
+
+                else:
+                    print("Sorry you Farkled out!")
+                    self.round += 1
+                    self.start_round()
+
+            elif user_choice == 'b':
+                self.wallet.bank()
+                self.round += 1 
+                self.start_round()
+
+            elif user_choice == 'q':
+                print(f'Thanks for playing. You earned {self.wallet.balance} points.')
+
+def str_tuple_int(input_str):
+    input_str = list(input_str)
+
+    for item in range(len(input_str)):
+        input_str[item] = int(input_str[item])
+        
+    return tuple(input_str)
 
 
 if __name__ == "__main__":

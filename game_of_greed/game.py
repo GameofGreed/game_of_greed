@@ -1,4 +1,4 @@
-from game_logic import GameLogic, Banker
+from game_logic import GameLogic, Banker, Player
 
 
 class Game:
@@ -20,7 +20,7 @@ class Game:
 
         self.round_num = 0
 
-        self._roller or GameLogic.roll_dice
+        # self._roller or GameLogic.roll_dice
 
         print("Welcome to Game of Greed")
 
@@ -39,10 +39,14 @@ class Game:
 
     
     def start_game(self):
-        pass
+        player = Player()
+        player.start_round()
+
         #if calc_score is = 0  and  shelved is a truthy value
             #self.clear_shelf()
 
-    game = Game()
-    game.play()
+game = Game()
+game.play()
     
+
+        
