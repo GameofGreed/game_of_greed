@@ -1,7 +1,7 @@
 
 # Game of Greed 1
 
-Submission pull request: [here]()
+Submission pull request: [here](https://github.com/GameofGreed/game_of_greed/pull/6)
 
 __________
 #### Developers: Kim Damalas, Amber Falbo, Brandon Gonzalez, Mason Fryberger
