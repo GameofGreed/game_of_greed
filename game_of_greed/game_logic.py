@@ -93,7 +93,8 @@ class Player(Banker):
         admit = GameLogic.roll_dice()
 
         if GameLogic.calculate_score(admit):
-            dice_shelf = input('Enter dice to keep, or (q)uit:')
+            print('Enter dice to keep, or (q)uit:')
+            dice_shelf = input('>')
             
             if dice_shelf == 'q':
                 print(f'Thanks for playing. You earned {self.wallet.balance} points.')
@@ -101,6 +102,7 @@ class Player(Banker):
             else:
                 self.scored_dice = str_tuple_int(dice_shelf)
                 self.wallet.shelf(GameLogic.calculate_score(self.scored_dice))
+                print(f'You have {self.wallet.shelved} unbanked points and {6 - len(self.scored_dice)} remaining')
                 self.bank_or_roll()
 
         else:
@@ -112,13 +114,13 @@ class Player(Banker):
             # print(f'Thanks for playing. You earned {self.wallet.balance} points.')
 
     def bank_or_roll(self):
-            user_choice = input('press (r) to roll again or (b) to bank points or (q) to quit.')
+            user_choice = input('(r)oll again, (b)ank your points or (q)uit:')
         
             if user_choice == 'r':
                 sec_roll = GameLogic.roll_dice(6-len(self.scored_dice))
 
                 if GameLogic.calculate_score(sec_roll):
-                    dice_shelf = input('enter dice to score')
+                    dice_shelf = input('>')
                     
                     if self.scored_dice:
                         add_dice = []
