@@ -1,4 +1,4 @@
-from game_logic import GameLogic, Banker, Player
+from game_of_greed.game_logic import GameLogic, Banker, Player
 
 
 class Game:
