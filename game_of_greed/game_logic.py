@@ -72,6 +72,8 @@ class Banker:
         if self.balance >= 10000:
             print(f'Winner {self.balance}')
             self.balance = 0
+
+        
         
 
     def clear_shelf(self):
@@ -112,6 +114,8 @@ class Player(Banker):
             # print(f'Thanks for playing. You earned {self.wallet.balance} points.')
 
     def bank_or_roll(self):
+            display = 6-len(self.scored_dice)
+            print(f'You have {self.wallet.shelved} unbanked points and {display} dice remaining')
             user_choice = input('press (r) to roll again or (b) to bank points or (q) to quit.')
         
             if user_choice == 'r':
@@ -129,6 +133,7 @@ class Player(Banker):
                             add_dice.append(int(char))
                         
                         self.scored_dice = tuple(add_dice)
+                        self.wallet.shelf(GameLogic.calculate_score(self.scored_dice))
                         self.bank_or_roll()
 
 
@@ -144,7 +149,9 @@ class Player(Banker):
                     self.start_round()
 
             elif user_choice == 'b':
+                print(f' You banked {self.wallet.shelved} points in round {self.round}')
                 self.wallet.bank()
+                print(f' Total score is {self.wallet.balance} points')
                 self.round += 1 
                 self.start_round()
 
