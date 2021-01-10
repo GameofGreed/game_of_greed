@@ -43,8 +43,10 @@ def diff(game_play_func, path="", sample=""):
 
     # inner function to mock rolling of dice
     def mock_roller(num):
+        
         return rolls.pop(0)
 
+    # print('mock_roller call', mock_roller(0))
     # store the "real" print & input so we can restore them later
     real_print = builtins.print
     real_input = builtins.input
