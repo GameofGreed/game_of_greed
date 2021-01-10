@@ -16,13 +16,13 @@ def test_one_and_done():
     assert not errors, errors[0]
 
 
-def test_single_bank():
-    game = Game()
-    errors = diff(game.play, path="tests/user_acc_test/bank_one_roll_then_quit.sim.txt")
-    assert not errors, errors[0]
+# def test_single_bank():
+#     game = Game()
+#     errors = diff(game.play, path="tests/user_acc_test/bank_one_roll_then_quit.sim.txt")
+#     assert not errors, errors[0]
 
 
-def test_bank_first_for_two_rounds():
-    game = Game()
-    errors = diff(game.play, path="tests/user_acc_test/bank_first_for_two_rounds.sim.txt")
-    assert not errors, errors[0]
+# def test_bank_first_for_two_rounds():
+#     game = Game()
+#     errors = diff(game.play, path="tests/user_acc_test/bank_first_for_two_rounds.sim.txt")
+#     assert not errors, errors[0]

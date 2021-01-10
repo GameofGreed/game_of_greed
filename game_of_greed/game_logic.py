@@ -1,5 +1,8 @@
 import collections
 import random
+import sys
+
+format_zilch = '*' * 34
 
 class GameLogic:
 
@@ -44,10 +47,7 @@ class GameLogic:
         for die in range(1,die_num+1):
             roll_result = roll_result + (random.randint(1,6),)
 
-        print_result = ''
-
-        for char in roll_result:
-            print_result += f'{char} '    
+        print_result = convert_tuple_to_str(roll_result)   
 
         print(f'Rolling {die_num} dice...')
         print(f'*** {print_result} ***')
@@ -90,17 +90,21 @@ class Player(Banker):
     def start_round(self):
         print(f'Starting round {self.round}')
         # user_choice = input('press (r) to roll dice or (q) to quit')
-        
+        roll = GameLogic.roll_dice()
         # if user_choice == 'r':
-        admit = GameLogic.roll_dice()
-
-        if GameLogic.calculate_score(admit):
+        
+        if GameLogic.calculate_score(roll):
             dice_shelf = input('Enter dice to keep, or (q)uit:')
             
+            
             if dice_shelf == 'q':
-                print(f'Thanks for playing. You earned {self.wallet.balance} points.')
+                sys.exit(f'Thanks for playing. You earned {self.wallet.balance} points.')
+
 
             else:
+                while validate_score_dice(roll, str_tuple_int(dice_shelf)) is False:
+                  dice_shelf = self.handle_cheat(roll, dice_shelf)
+
                 self.scored_dice = str_tuple_int(dice_shelf)
                 self.wallet.shelf(GameLogic.calculate_score(self.scored_dice))
                 self.bank_or_roll()
@@ -115,15 +119,21 @@ class Player(Banker):
 
     def bank_or_roll(self):
             display = 6-len(self.scored_dice)
+            if not display:
+                display = 6
+               
             print(f'You have {self.wallet.shelved} unbanked points and {display} dice remaining')
             user_choice = input('press (r) to roll again or (b) to bank points or (q) to quit.')
         
             if user_choice == 'r':
-                sec_roll = GameLogic.roll_dice(6-len(self.scored_dice))
+                roll = GameLogic.roll_dice(display)
 
-                if GameLogic.calculate_score(sec_roll):
+                if GameLogic.calculate_score(roll):
                     dice_shelf = input('enter dice to score')
                     
+                    while validate_score_dice(roll, str_tuple_int(dice_shelf)) is False:
+                        dice_shelf = self.handle_cheat(roll, dice_shelf)
+
                     if self.scored_dice:
                         add_dice = []
                         for num in self.scored_dice:
@@ -144,7 +154,7 @@ class Player(Banker):
                         self.bank_or_roll()
 
                 else:
-                    print("Sorry you Farkled out!")
+                    print(f'{format_zilch} \n**     Zilch!!! Round over      **\n{format_zilch}')
                     self.round += 1
                     self.start_round()
 
@@ -156,7 +166,17 @@ class Player(Banker):
                 self.start_round()
 
             elif user_choice == 'q':
-                print(f'Thanks for playing. You earned {self.wallet.balance} points.')
+                sys.exit(f'Thanks for playing. You earned {self.wallet.balance} points.')
+
+    def handle_cheat(self, roll, dice_shelf):
+        print('Cheater!!! Or possibly made a typo...')
+        roll = convert_tuple_to_str(roll)
+        print(f'*** {roll} ***')
+        dice_shelf = input('Enter dice to keep, or (q)uit:')
+        if dice_shelf == 'q':
+            sys.exit(f'Thanks for playing. You earned {self.wallet.balance} points.')
+
+        return dice_shelf
 
 def str_tuple_int(input_str):
     input_str = list(input_str)
@@ -167,3 +187,20 @@ def str_tuple_int(input_str):
     return tuple(input_str)
 
 
+def validate_score_dice(rolled:tuple, scored:tuple) -> bool:
+    rolled = collections.Counter(rolled)
+    scored = collections.Counter(scored)
+
+    for key in scored:
+        if scored[key] > rolled[key]:   
+            return False
+        else:
+            return True
+
+def convert_tuple_to_str(roll_result):
+    print_result = ''
+
+    for char in roll_result:
+        print_result += f'{char} ' 
+    
+    return print_result
