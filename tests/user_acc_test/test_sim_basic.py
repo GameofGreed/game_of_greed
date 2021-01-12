@@ -6,13 +6,13 @@ pytestmark = [pytest.mark.version_2, pytest.mark.version_3]
 
 def test_quitter():
     game = Game()
-    errors = diff(game.play, path="tests/user_acc_test/quitter.sim.txt")
+    errors = diff(game.play, path="tests/user_acc_test/sim_txt_files/quitter.sim.txt")
     assert not errors, errors[0]
 
 
 def test_one_and_done():
     game = Game()
-    errors = diff(game.play, path="tests/user_acc_test/one_and_done.sim.txt")
+    errors = diff(game.play, path="tests/user_acc_test/sim_txt_files/one_and_done.sim.txt")
     assert not errors, errors[0]
 
 
