@@ -1,6 +1,6 @@
-# from game_of_greed.game_logic import GameLogic, Banker, Player # this will eventually be the correct path when flo.py is working
+from game_of_greed.game_logic import GameLogic, Banker, Player # this will eventually be the correct path when flo.py is working
 
-from game_logic import GameLogic, Banker, Player   # for use with manual testing running the script. 
+# from game_logic import GameLogic, Banker, Player   # for use with manual testing running the script. 
 
 class Game:
     """Class for game of Greed Application
@@ -48,8 +48,11 @@ class Game:
         #if calc_score is = 0  and  shelved is a truthy value
             #self.clear_shelf()
 
-game = Game()
-game.play()
+if __name__ == "__main__":
+    game = Game()
+    game.play()
+    
+
     
 
         
